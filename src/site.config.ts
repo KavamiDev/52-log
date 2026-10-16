@@ -1,6 +1,6 @@
 export const site = {
   title: "52.log",
-  author: "Kevin Turpin",
+  author: "Kavami",
   github: "KavamiDev",
   repo: "52-log",
   topic: "52log",

@@ -1,11 +1,12 @@
 ---
 import "../styles/global.css";
+import { site } from "../site.config";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 
 interface Props { title?: string; description?: string; fixture?: boolean }
 const {
-  title = "52.log · Kevin Turpin",
+  title = `52.log · ${site.author}`,
   description = "52 paid products in 52 weeks, built in public. Every entry is a real commit.",
   fixture = false,
 } = Astro.props;
