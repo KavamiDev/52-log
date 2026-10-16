@@ -10,8 +10,8 @@ const commit = (message: string, date: string, over: Partial<CommitInfo> = {}): 
   sha: `abc${n++}def0123`, message, date, authorLogin: "KavamiDev", url: `https://github.com/x/commit/${n}`, ...over,
 });
 
-const build = (repos: RepoInfo[], commits: Record<string, CommitInfo[]>) =>
-  buildLog({ owner: "KavamiDev", topic: "52log", repos, commits, generatedAt: 0 });
+const build = (repos: RepoInfo[], commits: Record<string, CommitInfo[]>, names?: Record<string, string>) =>
+  buildLog({ owner: "KavamiDev", topic: "52log", repos, commits, generatedAt: 0, names });
 
 describe("buildLog", () => {
   it("builds a product from its init and keeps only convention commits", () => {
@@ -85,5 +85,17 @@ describe("buildLog", () => {
     const c = commit("init(#01): P", "2026-10-19T05:00:00Z");
     const log = build([repo("p")], { "KavamiDev/p": [c, c] });
     expect(log.products[0].milestones).toHaveLength(1);
+  });
+
+  it("uses a configured name when the init has no Name trailer", () => {
+    const log = build(
+      [repo("52-log"), repo("named")],
+      {
+        "KavamiDev/52-log": [commit("init(#00): 52.log", "2026-10-16T05:00:00Z")],
+        "KavamiDev/named": [commit("init(#01): N\n\nName: From Trailer", "2026-10-19T05:00:00Z")],
+      },
+      { "52-log": "52.log", named: "From Config" },
+    );
+    expect(log.products.map((p) => p.name)).toEqual(["52.log", "From Trailer"]);
   });
 });

@@ -7,12 +7,10 @@ import WeekLog from "../components/WeekLog.astro";
 import Sidebar from "../components/Sidebar.astro";
 import Portfolio from "../components/Portfolio.astro";
 import Constellation from "../components/Constellation.astro";
-import data from "../data/log.json";
-import type { LogData } from "../lib/build-log";
+import { log } from "../lib/log";
 import { counters } from "../lib/stats";
 import { href } from "../lib/view";
 
-const log = data as LogData;
 const now = Date.now();
 const c = counters(log.products, now);
 const milestones = log.products.flatMap((p) => p.milestones);

@@ -12,14 +12,14 @@ jobs:
     env:
       DEPLOY_DIR: ${{ vars.DEPLOY_DIR || 'public' }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: oven-sh/setup-bun@v2
       - name: Build
         run: |
           if [ -f package.json ] && grep -q '"build"' package.json; then
             bun install && bun run build
           fi
-      - uses: cloudflare/wrangler-action@v3
+      - uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}

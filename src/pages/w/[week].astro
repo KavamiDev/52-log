@@ -2,15 +2,14 @@
 import DueRow from "../../components/DueRow.astro";
 import Base from "../../layouts/Base.astro";
 import CommitRow from "../../components/CommitRow.astro";
-import data from "../../data/log.json";
-import type { LogData } from "../../lib/build-log";
+import { log } from "../../lib/log";
 import type { Product } from "../../lib/types";
 import { productStatus, productFields } from "../../lib/stats";
 import { currentWeek } from "../../lib/week";
 import { pad, href, statusLabel } from "../../lib/view";
 
 export function getStaticPaths() {
-  return (data as LogData).products.map((p) => ({ params: { week: pad(p.week) }, props: { p } }));
+  return log.products.map((p) => ({ params: { week: pad(p.week) }, props: { p } }));
 }
 
 const { p } = Astro.props as { p: Product };
@@ -33,7 +32,7 @@ const links = [
   p.isPublic && ["Repository", `https://github.com/${p.repo}`],
 ].filter(Boolean) as [string, string][];
 ---
-<Base title={`Week ${pad(p.week)} · ${p.name} · 52.log`} description={p.description ?? `Week ${pad(p.week)} of the 52.log challenge.`} fixture={(data as LogData).fixture}>
+<Base title={`Week ${pad(p.week)} · ${p.name} · 52.log`} description={p.description ?? `Week ${pad(p.week)} of the 52.log challenge.`} fixture={log.fixture}>
   <main class="wrap" style="padding-top: 32px; padding-bottom: 64px; display: flex; flex-direction: column; gap: 24px; max-width: 960px">
     <a href={href()} style="font-size: 14px">← All weeks</a>
     <div style="display: flex; flex-direction: column; gap: 10px">

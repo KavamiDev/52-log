@@ -49,8 +49,8 @@ Only commits whose subject matches the convention appear. Everything else
 | ship | `Demo` (url), `Video` (url), `Price` (e.g. `5 EUR`), `Hours` (number) |
 | verdict | `Visitors`, `Signups`, `Paying`, `Revenue` (e.g. `15 EUR`), `Lesson` |
 
-Product name: `Name` trailer of the `init`, else the repo name title-cased
-(`invoice-buddy` → `Invoice Buddy`).
+Product name: `Name` trailer of the `init`, else `names` in `src/site.config.ts`
+(e.g. `52-log` → `52.log`), else the repo name title-cased (`invoice-buddy` → `Invoice Buddy`).
 
 Subject regex:
 `^(init|progress|cut|ship|verdict)(?:\(#(\d{2})\))?:\s+(.{1,72})$`

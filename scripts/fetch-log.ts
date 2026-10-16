@@ -49,6 +49,6 @@ for (const r of apiRepos) {
   }));
 }
 
-const log = buildLog({ owner: site.github, topic: site.topic, repos, commits, generatedAt: Date.now() });
+const log = buildLog({ owner: site.github, topic: site.topic, repos, commits, generatedAt: Date.now(), names: site.names });
 writeFileSync(OUT, JSON.stringify(log, null, 2));
 console.log(`fetch-log: ${repos.length} repo(s), ${log.products.reduce((n, p) => n + p.milestones.length, 0)} milestone(s)`);

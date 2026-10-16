@@ -33,6 +33,7 @@ export function buildLog(input: {
   repos: RepoInfo[];
   commits: Record<string, CommitInfo[]>;
   generatedAt: number;
+  names?: Record<string, string>; // repo name → display name, when the init has no Name trailer
 }): LogData {
   const products: Product[] = [];
 
@@ -63,7 +64,7 @@ export function buildLog(input: {
     products.push({
       week: repoWeek,
       slug: repo.name,
-      name: init?.m.trailers.Name ?? titleCase(repo.name),
+      name: init?.m.trailers.Name ?? input.names?.[repo.name] ?? titleCase(repo.name),
       repo: repo.fullName,
       isPublic: !repo.isPrivate,
       homepage: repo.homepage || null,
