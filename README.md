@@ -54,12 +54,12 @@ scripts/new-project.sh invoice-buddy 01 "Invoice Buddy"
 ```
 
 It creates `~/Desktop/invoice-buddy` from `templates/project/`, the public repo
-`KavamiDev/invoice-buddy` with the `52log` topic, the Cloudflare Pages project, fills the
-repo Website field and sets the secrets. Then it prints the `init(#01)` commit for you to
+`KavamiDev/invoice-buddy` with the `52log` topic and sets the secrets. If Cloudflare keys
+are configured, it also creates the Cloudflare Pages project and fills the repo Website field. Then it prints the `init(#01)` commit for you to
 make and push. From there:
 
-- every push to `main` deploys `public/` (or `$DEPLOY_DIR`, after `bun run build` if any)
-  to Cloudflare Pages (`deploy.yml`),
+- with Cloudflare configured, every push to `main` deploys `public/` (or `$DEPLOY_DIR`,
+  after `bun run build` if any) to Cloudflare Pages (`deploy.yml`, idle otherwise),
 - every push containing a milestone pings this repo, which rebuilds in ~2 minutes
   (`notify-52log.yml`).
 
@@ -84,19 +84,21 @@ Put `GH_TOKEN=…` in `.env` (gitignored) to build from real data locally.
 | token | where it is created | access | stored in |
 |---|---|---|---|
 | `GH_TOKEN` | GitHub › Settings › Developer settings › Fine-grained tokens | All repositories · Contents **read** · Metadata read | `52-log` repo secret, local `.env` |
-| `LOG_DISPATCH_TOKEN` | same | Only `KavamiDev/52-log` · Contents **read and write** (needed for `repository_dispatch`) | `~/.52log.env`, copied to each project repo by the script |
-| `CLOUDFLARE_API_TOKEN` | Cloudflare › My Profile › API Tokens › Create › "Cloudflare Pages: Edit" | your account | `~/.52log.env`, copied by the script |
-| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare dashboard, right column of Workers & Pages | | `~/.52log.env`, set as a repo variable |
+| `LOG_DISPATCH_TOKEN` | same | Only `KavamiDev/52-log` · Contents **read and write** (needed for `repository_dispatch`) | `.env`, copied to each project repo by the script |
+| `CLOUDFLARE_API_TOKEN` *(optional)* | Cloudflare › My Profile › API Tokens › Create › "Cloudflare Pages: Edit" | your account | `.env`, copied by the script |
+| `CLOUDFLARE_ACCOUNT_ID` *(optional)* | Cloudflare dashboard, right column of Workers & Pages | | `.env`, set as a repo variable |
 
-`~/.52log.env`:
+`.env` at the root of this repo (gitignored; `~/.52log.env` works too):
 
 ```
+GH_TOKEN=github_pat_…
 LOG_DISPATCH_TOKEN=github_pat_…
-CLOUDFLARE_API_TOKEN=…
-CLOUDFLARE_ACCOUNT_ID=…
+CLOUDFLARE_API_TOKEN=…     # optional
+CLOUDFLARE_ACCOUNT_ID=…    # optional
 ```
 
-Then `chmod 600 ~/.52log.env` and `gh auth login` once.
+Then `chmod 600 .env` and `gh auth login` once. Without the Cloudflare keys, projects are
+created without hosting and each one picks its own.
 
 ### 2. This repo
 

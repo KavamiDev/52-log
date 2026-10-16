@@ -142,12 +142,13 @@ Expected volume: ~20–40 builds/month. Cost: 0 €.
 - `public/index.html` placeholder, `README.md`, `.gitignore`.
 
 `scripts/new-project.sh <slug> <week> ["Name"]` (later wrapped by a
-`/nouveau-projet` shortcut), secrets read from `~/.52log.env`:
+`/nouveau-projet` shortcut), secrets read from `.env` (or `~/.52log.env`), Cloudflare keys optional:
 
 1. Copy the template into `~/Desktop/<slug>`, `git init -b main`, set `core.hooksPath`
    and `commit.template`.
 2. `gh repo create KavamiDev/<slug> --public` + topic `52log`.
-3. `wrangler pages project create <slug>`, set the repo Website field to its URL.
+3. If Cloudflare keys are set: `wrangler pages project create <slug>`, set the repo Website
+   field to its URL. Otherwise hosting is skipped and `deploy.yml` stays idle.
 4. Set `LOG_DISPATCH_TOKEN`, `CLOUDFLARE_API_TOKEN` secrets and `CLOUDFLARE_ACCOUNT_ID` variable.
 5. Print the suggested `init(#NN)` commit. The user commits and pushes themself.
 

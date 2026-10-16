@@ -2,8 +2,6 @@
 
 Week __WEEK__ of [52.log](https://kavamidev.github.io/52-log/): one paid product a week.
 
-Live: https://__SLUG__.pages.dev
-
 ## Milestone commits
 
 Only these appear on 52.log (the `commit-msg` hook checks them):
@@ -20,5 +18,7 @@ Trailers go in the last paragraph, one `Key: value` per line.
 
 ## Deploy
 
-Every push to `main` deploys `public/` (or `$DEPLOY_DIR`, a repo variable) to Cloudflare Pages.
-If `package.json` has a `build` script, it runs first.
+Hosting is chosen per project. With Cloudflare Pages: set the repo variable
+`CLOUDFLARE_ACCOUNT_ID` and the secret `CLOUDFLARE_API_TOKEN`, and every push to `main`
+deploys `public/` (or `$DEPLOY_DIR`, after `bun run build` if any). Without them,
+`deploy.yml` stays idle. Put the live URL in the repo Website field so 52.log links to it.
