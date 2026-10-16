@@ -1,0 +1,15 @@
+---
+import { site } from "../site.config";
+import { href } from "../lib/view";
+---
+<footer style="border-top: 1px solid #30363d">
+  <div class="wrap" style="padding-top: 24px; padding-bottom: 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 12px; color: #9198a1">
+    <span>© 2026 {site.author} · Built under the Réunion sky</span>
+    <span style="display: flex; gap: 16px">
+      <a href={href("#log")}>Log</a>
+      <a href={href("#products")}>Products</a>
+      <a href={`https://github.com/${site.github}`}>GitHub</a>
+      {site.x && <a href={`https://x.com/${site.x}`}>X</a>}
+    </span>
+  </div>
+</footer>

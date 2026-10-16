@@ -1,0 +1,79 @@
+---
+import { site } from "../site.config";
+import { pad, fmtDate } from "../lib/view";
+
+interface Props { week: number; startedAt: number | null }
+const { week, startedAt } = Astro.props;
+
+// Same seeded generator as the mockup, so the sky is identical on every build.
+let seed = 11;
+const rnd = () => ((seed = (seed * 9301 + 49297) % 233280), seed / 233280);
+const stars = Array.from({ length: 80 }, () => {
+  const size = rnd() < 0.85 ? 1.5 : 2.5;
+  const top = rnd() * 62, left = rnd() * 100, op = (0.35 + rnd() * 0.6).toFixed(2);
+  return `position: absolute; top: ${top.toFixed(2)}%; left: ${left.toFixed(2)}%; width: ${size}px; height: ${size}px; border-radius: 50%; background: #fff; opacity: ${op}`;
+});
+const started = startedAt
+  ? `started ${fmtDate(startedAt, { month: "short", day: "numeric", year: "numeric" })}`
+  : `starts ${fmtDate(Date.parse(`${site.week0}T12:00:00Z`), { month: "short", day: "numeric", year: "numeric" })}`;
+const palm = [
+  "M22 -150 C 0 -170, -30 -165, -50 -145 C -28 -158, 0 -158, 22 -150 Z",
+  "M22 -150 C 10 -180, -10 -190, -30 -190 C -8 -180, 8 -168, 22 -150 Z",
+  "M22 -150 C 30 -185, 50 -195, 70 -188 C 50 -182, 34 -170, 22 -150 Z",
+  "M22 -150 C 50 -165, 80 -160, 95 -140 C 75 -152, 50 -154, 22 -150 Z",
+  "M22 -150 C 40 -150, 60 -135, 66 -110 C 55 -132, 40 -142, 22 -150 Z",
+  "M22 -150 C 5 -148, -15 -130, -20 -108 C -10 -130, 5 -142, 22 -150 Z",
+];
+---
+<section aria-label="Intro" style="position: relative; overflow: hidden; min-height: 620px; background: radial-gradient(55% 45% at 0% 45%, rgba(156,96,232,0.5), rgba(156,96,232,0) 70%), linear-gradient(180deg, #100b33 0%, #241a78 40%, #3743b8 75%, #5670dc 100%)">
+  {stars.map((s) => <div aria-hidden="true" style={s}></div>)}
+  <div aria-hidden="true" style="position: absolute; top: 70px; right: 24%; width: 34px; height: 34px; border-radius: 50%; box-shadow: 9px -6px 0 0 #f6eec6; filter: drop-shadow(0 0 10px rgba(246,238,198,0.5))"></div>
+  <div aria-hidden="true" style="position: absolute; top: 118px; left: 54%; width: 130px; height: 2px; background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.9)); transform: rotate(-16deg); border-radius: 2px"></div>
+
+  <div class="wrap" style="position: relative; z-index: 2; padding-top: 104px; display: flex; flex-direction: column; gap: 22px">
+    <span style="font: 13px var(--font-mono); color: #c9cff5">week {pad(week)} / 52 · {started}</span>
+    <h1 style="margin: 0; max-width: 720px; font-family: var(--font-display); font-weight: 800; font-size: clamp(38px, 6vw, 68px); line-height: 1.02; letter-spacing: -0.02em; color: #fff">Shipping one product<br />every week.</h1>
+    <p style="margin: 0; max-width: 520px; font-size: 18px; line-height: 1.55; color: #d7dbf7">52 weeks, 52 launches, every one of them paid. Idea on Monday, demo on Sunday, numbers thirty days later. The git history is the proof.</p>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; padding-top: 6px">
+      <a class="btn btn-primary" href="#log" style="min-height: 44px; padding: 0 18px">Read the log</a>
+      <a class="btn" href={`https://github.com/${site.github}`} style="min-height: 44px; padding: 0 18px; background: rgba(13,17,23,0.55); border-color: rgba(201,207,245,0.35)">Follow on GitHub</a>
+      {site.x && <a class="btn" href={`https://x.com/${site.x}`} style="min-height: 44px; padding: 0 18px; background: rgba(13,17,23,0.55); border-color: rgba(201,207,245,0.35)">Follow on X</a>}
+    </div>
+  </div>
+
+  <svg aria-hidden="true" viewBox="0 200 1440 320" preserveAspectRatio="xMidYMax slice" style="position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 320px; z-index: 1">
+    <path d="M0 400 L120 365 L220 335 L300 305 L360 258 L405 222 L432 206 L452 214 L470 200 L492 212 L520 196 L548 214 L590 246 L665 292 L760 318 L900 300 L1000 272 L1060 258 L1100 264 L1180 300 L1300 330 L1440 338 L1440 520 L0 520 Z" fill="#3a49bd"></path>
+    <path d="M0 432 C 200 384, 380 372, 560 410 C 720 444, 860 396, 1040 382 C 1200 370, 1340 402, 1440 410 L1440 520 L0 520 Z" fill="#26308f"></path>
+    <path d="M0 455 C 180 430, 360 440, 520 462 C 700 486, 900 440, 1100 436 C 1260 434, 1360 446, 1440 452 L1440 520 L0 520 Z" fill="#161c5c"></path>
+    <g transform="translate(150 470) scale(0.95)" fill="#0a0e2a">
+      <path d="M0 0 C 4 -50, 10 -100, 22 -150" stroke="#0a0e2a" stroke-width="6" fill="none" stroke-linecap="round"></path>
+      {palm.map((d) => <path d={d}></path>)}
+    </g>
+    <g transform="translate(230 478) scale(0.7)" fill="#0a0e2a">
+      <path d="M0 0 C 4 -50, 10 -100, 22 -150" stroke="#0a0e2a" stroke-width="7" fill="none" stroke-linecap="round"></path>
+      {palm.slice(0, 5).map((d) => <path d={d}></path>)}
+    </g>
+    <g transform="translate(1330 474) scale(0.8)" fill="#0a0e2a">
+      <path d="M0 0 C -4 -50, -12 -100, -26 -150" stroke="#0a0e2a" stroke-width="6" fill="none" stroke-linecap="round"></path>
+      <path d="M-26 -150 C -4 -170, 26 -165, 46 -145 C 24 -158, -4 -158, -26 -150 Z"></path>
+      <path d="M-26 -150 C -14 -180, 6 -190, 26 -190 C 4 -180, -12 -168, -26 -150 Z"></path>
+      <path d="M-26 -150 C -34 -185, -54 -195, -74 -188 C -54 -182, -38 -170, -26 -150 Z"></path>
+      <path d="M-26 -150 C -54 -165, -84 -160, -99 -140 C -79 -152, -54 -154, -26 -150 Z"></path>
+      <path d="M-26 -150 C -44 -150, -64 -135, -70 -110 C -59 -132, -44 -142, -26 -150 Z"></path>
+    </g>
+    <g stroke="#0a0e2a" stroke-linecap="round">
+      <line x1="1180" y1="432" x2="1160" y2="486" stroke-width="3"></line>
+      <line x1="1180" y1="432" x2="1202" y2="486" stroke-width="3"></line>
+      <line x1="1180" y1="432" x2="1183" y2="488" stroke-width="3"></line>
+      <line x1="1214" y1="446" x2="1128" y2="400" stroke-width="12"></line>
+      <line x1="1136" y1="404" x2="1120" y2="396" stroke-width="16"></line>
+      <line x1="1150" y1="412" x2="1146" y2="410" stroke="#f78166" stroke-width="13"></line>
+    </g>
+    <path d="M0 476 C 240 452, 520 462, 760 484 C 980 504, 1200 456, 1440 466 L1440 520 L0 520 Z" fill="#0d1117"></path>
+    <g stroke="#0d1117" stroke-width="2" stroke-linecap="round" fill="none">
+      <path d="M60 470 C 62 452, 66 444, 72 436"></path><path d="M66 472 C 66 456, 62 446, 56 440"></path><path d="M70 470 C 74 458, 80 452, 88 448"></path>
+      <path d="M1010 482 C 1012 466, 1016 458, 1022 452"></path><path d="M1016 484 C 1014 470, 1010 462, 1004 456"></path><path d="M1020 482 C 1026 470, 1032 464, 1040 460"></path>
+      <path d="M1386 466 C 1388 450, 1392 442, 1398 436"></path><path d="M1392 468 C 1390 454, 1386 446, 1380 440"></path>
+    </g>
+  </svg>
+</section>

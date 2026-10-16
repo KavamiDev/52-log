@@ -1,0 +1,32 @@
+{
+  "generatedAt": 1792152000000,
+  "fixture": true,
+  "products": [
+    {
+      "week": 0,
+      "slug": "52-log",
+      "name": "52.log",
+      "repo": "KavamiDev/52-log",
+      "isPublic": true,
+      "homepage": null,
+      "description": "[FIXTURE] A portfolio shaped like a commit log",
+      "milestones": [
+        {
+          "type": "init",
+          "week": 0,
+          "subject": "52.log, a portfolio shaped like a commit log",
+          "body": "",
+          "trailers": {
+            "For": "anyone following the challenge (recruiters, friends, me in six months)",
+            "Hypothesis": "a public, timestamped log keeps me shipping",
+            "Scope": "log page, 52-week grid, counters"
+          },
+          "sha": "f1x7ure000000000000000000000000000000000",
+          "repo": "KavamiDev/52-log",
+          "committedAt": 1792036800000,
+          "url": null
+        }
+      ]
+    }
+  ]
+}

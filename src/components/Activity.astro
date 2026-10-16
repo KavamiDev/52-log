@@ -1,0 +1,61 @@
+---
+import type { Milestone } from "../lib/types";
+import { activityLevels } from "../lib/stats";
+import { WEEK0, weekStart, dayIndex } from "../lib/week";
+import { pad, fmtDate } from "../lib/view";
+
+interface Props { milestones: Milestone[]; week: number }
+const { milestones, week } = Astro.props;
+
+const DAY = 86_400_000;
+const levels = activityLevels(milestones);
+const subjects = new Map<number, string[]>();
+for (const m of milestones) {
+  const d = dayIndex(m.committedAt);
+  subjects.set(d, [...(subjects.get(d) ?? []), `${m.type}: ${m.subject}`]);
+}
+let prev = "";
+const months = Array.from({ length: 52 }, (_, w) => {
+  const t = weekStart(w) + DAY / 2;
+  const m = fmtDate(t, { month: "short" });
+  const show = m !== prev && (w === 0 || Number(fmtDate(t, { day: "numeric" })) <= 7);
+  prev = m;
+  return show ? m : "";
+});
+const days = levels.map((level, i) => {
+  const t = WEEK0 + i * DAY + DAY / 2;
+  return { level, label: [fmtDate(t, { month: "short", day: "numeric" }), ...(subjects.get(i) ?? [])].join(" · ") };
+});
+const inWeek = milestones.filter((m) => m.week === week).length;
+const range = `${fmtDate(WEEK0 + DAY, { month: "short", year: "numeric" })} to ${fmtDate(WEEK0 + 363 * DAY, { month: "short", year: "numeric" })}`;
+---
+<section aria-label="52-week activity" class="box" style="padding: 16px">
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; margin-bottom: 14px">
+    <h2 style="margin: 0; font-size: 16px; font-weight: 500">{inWeek} milestone commit{inWeek === 1 ? "" : "s"} in week {pad(week)}</h2>
+    <span style="font-size: 12px; color: #9198a1">{range}</span>
+  </div>
+  <div style="overflow-x: auto; padding-bottom: 4px" tabindex="0" aria-label="Activity grid, scrollable">
+    <div style="display: flex; flex-direction: column; gap: 4px; width: max-content">
+      <div style="display: flex; gap: 6px">
+        <div style="width: 28px"></div>
+        <div aria-hidden="true" style="display: grid; grid-template-columns: repeat(52, 11px); gap: 3px; font-size: 11px; color: #9198a1; height: 14px">
+          {months.map((m) => <span style="white-space: nowrap; overflow: visible">{m}</span>)}
+        </div>
+      </div>
+      <div style="display: flex; gap: 6px">
+        <div aria-hidden="true" style="width: 28px; display: grid; grid-template-rows: repeat(7, 11px); gap: 3px; font-size: 10px; color: #9198a1; line-height: 11px">
+          <span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span><span></span>
+        </div>
+        <div style="display: grid; grid-template-rows: repeat(7, 11px); grid-auto-flow: column; grid-auto-columns: 11px; gap: 3px">
+          {days.map((d) => <div class={`cell cell-${d.level}`} title={d.label}></div>)}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; margin-top: 12px; font-size: 12px; color: #9198a1">
+    <span>One column per week. One week, one product.</span>
+    <span style="display: flex; align-items: center; gap: 3px">Less
+      {[0, 1, 2, 3, 4].map((l) => <span class={`cell cell-${l}`}></span>)}
+      More</span>
+  </div>
+</section>

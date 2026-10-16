@@ -1,0 +1,53 @@
+---
+import type { Product } from "../lib/types";
+import { productFields } from "../lib/stats";
+import { pad, fmtDate } from "../lib/view";
+
+interface Props { products: Product[]; c: { currentWeek: number; shipped: number; streak: number; revenue: number }; siteUrl: string; now: number }
+const { products, c, siteUrl, now } = Astro.props;
+
+const eur = (n: number) => `€${n.toLocaleString("en-US", { maximumFractionDigits: 2 })}`;
+const sold = products
+  .map((p) => ({ name: p.name, revenue: productFields(p).verdict?.revenue ?? 0 }))
+  .filter((p) => p.revenue > 0);
+const colors = ["#56d364", "#4493f8", "#d2a8ff", "#e3b341", "#ff9492", "#79c0ff"];
+const nextMonth = fmtDate(new Date(now).setUTCDate(1) + 32 * 86_400_000, { month: "long" });
+const topics = ["build-in-public", "mvp", "indie-hacking", "astro", "github-actions"];
+---
+<aside aria-label="About" style="flex: 1 1 260px; max-width: 100%; display: flex; flex-direction: column; gap: 24px">
+  <div style="display: flex; flex-direction: column; gap: 14px">
+    <h2 class="h-section">About</h2>
+    <p style="margin: 0; font-size: 16px; line-height: 1.5">A public log of 52 products shipped in 52 weeks. Every one is paid, to find out what people actually buy.</p>
+    <a href={siteUrl} style="display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#9198a1" stroke-width="1.4" stroke-linecap="round"><path d="M6.5 9.5l3-3M7 4.5l1.2-1.2a2.6 2.6 0 013.6 3.6L10.6 8M9 11.5l-1.2 1.2a2.6 2.6 0 01-3.6-3.6L5.4 8"></path></svg>{siteUrl.replace(/^https?:\/\//, "").replace(/\/$/, "")}</a>
+    <div style="display: flex; flex-wrap: wrap; gap: 6px">{topics.map((t) => <span class="topic">{t}</span>)}</div>
+    <ul style="list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: #9198a1">
+      <li style="display: flex; align-items: center; gap: 8px"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="3" width="12" height="11" rx="1.5"></rect><path d="M2 6.5h12M5 1.5v3M11 1.5v3"></path></svg><b style="color: #e6edf3">Week {pad(c.currentWeek)}</b> of 52</li>
+      <li style="display: flex; align-items: center; gap: 8px"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M8 1.5l6 3v7l-6 3-6-3v-7z"></path></svg><b style="color: #e6edf3">{c.shipped}</b> shipped</li>
+      <li style="display: flex; align-items: center; gap: 8px"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M9 1.5L3.5 9H8l-1 5.5L12.5 7H8z"></path></svg><b style="color: #e6edf3">{c.streak}</b> week streak</li>
+      <li style="display: flex; align-items: center; gap: 8px"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1.5 14.5h13M3.5 11v3.5M7 7v7.5M10.5 9v5.5M14 4v10.5"></path></svg><b style="color: #e6edf3">{eur(c.revenue)}</b> total revenue</li>
+    </ul>
+  </div>
+  <div style="border-top: 1px solid #30363d"></div>
+  <div style="display: flex; flex-direction: column; gap: 12px">
+    <h2 class="h-section">Rules</h2>
+    <ol style="margin: 0; padding-left: 18px; list-style: decimal; display: flex; flex-direction: column; gap: 8px; font-size: 14px; line-height: 1.5; color: #9198a1">
+      <li>Idea committed Monday, demo shipped Sunday.</li>
+      <li>Scope freezes Thursday night. Whatever is not done leaves V1.</li>
+      <li>Every product has a price.</li>
+      <li>Numbers are published 30 days after launch, good or bad.</li>
+      <li>Two skipped weeks allowed. Never two in a row.</li>
+    </ol>
+  </div>
+  <div style="border-top: 1px solid #30363d"></div>
+  <div id="revenue" style="display: flex; flex-direction: column; gap: 10px; scroll-margin-top: 16px">
+    <h2 class="h-section">Revenue by product</h2>
+    <div style="height: 8px; border-radius: 4px; background: #151b23; outline: 1px solid #30363d; outline-offset: -1px; display: flex; overflow: hidden">
+      {sold.map((p, i) => <span style={`flex: ${p.revenue}; background: ${colors[i % colors.length]}`}></span>)}
+    </div>
+    {sold.length === 0
+      ? <span style="font-size: 12px; color: #9198a1">Nothing sold yet. Ask again in {nextMonth}.</span>
+      : <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: #9198a1">
+          {sold.map((p, i) => <li style="display: flex; align-items: center; gap: 6px"><span aria-hidden="true" style={`width: 8px; height: 8px; border-radius: 50%; background: ${colors[i % colors.length]}`}></span><span style="color: #e6edf3">{p.name}</span> {eur(p.revenue)}</li>)}
+        </ul>}
+  </div>
+</aside>

@@ -1,0 +1,23 @@
+---
+import { site } from "../site.config";
+import type { Milestone } from "../lib/types";
+import { formatCommitDate } from "../lib/stats";
+import { fullBody, initials } from "../lib/view";
+
+interface Props { m: Milestone; now: number }
+const { m, now } = Astro.props;
+const body = fullBody(m);
+---
+<div class="commit">
+  <div style="flex: 1 1 360px; min-width: 0">
+    <p class="ctitle">{m.type}: {m.subject}</p>
+    <p class="cmeta"><span class="av" aria-hidden="true">{initials(site.author)}</span><span style="color: #e6edf3; font-weight: 600">{site.github}</span> committed <time datetime={new Date(m.committedAt).toISOString()} data-rel>{formatCommitDate(m.committedAt, now)}</time></p>
+    {body && <pre class="cbody">{body}</pre>}
+  </div>
+  <div style="display: flex; align-items: center; gap: 8px">
+    <span class={`lbl l-${m.type}`}>{m.type}</span>
+    {m.url
+      ? <a class="sha" href={m.url} aria-label={`Commit ${m.sha.slice(0, 7)} on GitHub`}>{m.sha.slice(0, 7)}</a>
+      : <span class="sha">{m.sha.slice(0, 7)}</span>}
+  </div>
+</div>

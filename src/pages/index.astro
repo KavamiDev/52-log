@@ -1,0 +1,34 @@
+---
+import Base from "../layouts/Base.astro";
+import Hero from "../components/Hero.astro";
+import Tabs from "../components/Tabs.astro";
+import Activity from "../components/Activity.astro";
+import WeekLog from "../components/WeekLog.astro";
+import Sidebar from "../components/Sidebar.astro";
+import Portfolio from "../components/Portfolio.astro";
+import Constellation from "../components/Constellation.astro";
+import data from "../data/log.json";
+import type { LogData } from "../lib/build-log";
+import { counters } from "../lib/stats";
+import { href } from "../lib/view";
+
+const log = data as LogData;
+const now = Date.now();
+const c = counters(log.products, now);
+const milestones = log.products.flatMap((p) => p.milestones);
+const startedAt = milestones.length ? Math.min(...milestones.map((m) => m.committedAt)) : null;
+const siteUrl = new URL(href(), Astro.site).href;
+---
+<Base fixture={log.fixture}>
+  <Hero week={c.currentWeek} startedAt={startedAt} />
+  <Tabs logCount={milestones.length} productCount={log.products.length} />
+  <main class="wrap" style="padding-top: 32px; padding-bottom: 64px; display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start">
+    <div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 32px">
+      <Activity milestones={milestones} week={c.currentWeek} />
+      <WeekLog products={log.products} now={now} />
+    </div>
+    <Sidebar products={log.products} c={c} siteUrl={siteUrl} now={now} />
+  </main>
+  <Portfolio products={log.products} now={now} />
+  <Constellation products={log.products} week={c.currentWeek} now={now} />
+</Base>

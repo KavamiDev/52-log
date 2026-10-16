@@ -1,0 +1,12 @@
+---
+import { dueSunday } from "../lib/week";
+import { fmtDate } from "../lib/view";
+interface Props { week: number }
+---
+<div class="commit" style="background: #0a0e14">
+  <div style="flex: 1 1 360px; min-width: 0">
+    <p class="ctitle" style="color: #9198a1; font-weight: 500">ship: not shipped yet</p>
+    <p class="cmeta">due Sunday {fmtDate(dueSunday(Astro.props.week), { month: "short", day: "numeric" })}</p>
+  </div>
+  <div style="display: flex; align-items: center; gap: 8px"><span class="lbl l-ship">ship</span></div>
+</div>

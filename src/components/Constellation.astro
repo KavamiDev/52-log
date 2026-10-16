@@ -1,0 +1,38 @@
+---
+import type { Product } from "../lib/types";
+import { productStatus } from "../lib/stats";
+import { pad, STARS, statusLabel } from "../lib/view";
+
+interface Props { products: Product[]; week: number; now: number }
+const { products, week, now } = Astro.props;
+const status = new Map(products.map((p) => [p.week, productStatus(p, now)]));
+const lit = [...status.values()].filter((s) => s === "shipped").length;
+const curStatus = statusLabel[status.get(week) ?? "planned"].text;
+const [cx, cy] = STARS[week];
+const label = `52 stars, one per week; ${lit} lit; week ${pad(week)} is ${curStatus}`;
+---
+<section aria-label="Constellation" style="background: linear-gradient(180deg, #0d1117 0%, #17144a 45%, #1d1a5e 60%, #0d1117 100%); padding: 72px 0">
+  <div class="wrap" style="display: flex; flex-wrap: wrap; gap: 32px 48px; align-items: center">
+    <div style="flex: 1 1 280px; display: flex; flex-direction: column; gap: 14px">
+      <span style="font: 12px var(--font-mono); color: #a5b4fc; letter-spacing: 0.08em">THE WHOLE YEAR</span>
+      <h2 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 36px; line-height: 1.1">Connect the dots.</h2>
+      <p style="margin: 0; font-size: 16px; line-height: 1.6; color: #c9cff5">Every shipped product lights a star. The path is already drawn, it just needs 52 Sundays.</p>
+      <span style="font-size: 14px; color: #9198a1"><b style="color: #ffe9a8">{lit}</b> of 52 lit · week {pad(week)} {curStatus}</span>
+    </div>
+    <div style="flex: 999 1 560px; min-width: 0">
+      <svg role="img" aria-label={label} viewBox="0 0 1040 300" style="width: 100%; height: auto; display: block">
+        <polyline points={STARS.map((p) => p.join(",")).join(" ")} fill="none" stroke="#4a4f9c" stroke-width="1" stroke-dasharray="2 5" opacity="0.7"></polyline>
+        {STARS.map(([x, y], w) => {
+          if (w === week) return null;
+          const on = status.get(w) === "shipped";
+          return on
+            ? <circle cx={x} cy={y} r="4" fill="#ffe9a8"><title>Week {pad(w)} · shipped</title></circle>
+            : <circle cx={x} cy={y} r={w % 5 === 0 ? 3 : 2.2} fill="#8b93c7" opacity="0.55"><title>Week {pad(w)}</title></circle>;
+        })}
+        <circle cx={cx} cy={cy} r="16" fill="#ffe9a8" opacity="0.14"></circle>
+        <circle cx={cx} cy={cy} r="5" fill="#ffe9a8"><title>Week {pad(week)} · {curStatus}</title></circle>
+        <text x={cx + 14} y={cy + 22} fill="#ffe9a8" font-size="12" font-family="ui-monospace, Menlo, monospace">W{pad(week)}</text>
+      </svg>
+    </div>
+  </div>
+</section>

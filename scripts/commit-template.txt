@@ -1,0 +1,11 @@
+
+# 52.log milestone commit (delete this block for a normal commit)
+#
+# <type>(#<week>): <subject, max 72 chars>
+#   type: init | progress | cut | ship | verdict
+#
+# init     For: / Problem: / Hypothesis: / Scope: / Price:
+# ship     Demo: / Video: / Price: 5 EUR / Hours: 7
+# verdict  Visitors: / Signups: / Paying: / Revenue: 15 EUR / Lesson:
+#
+# Trailers go in the last paragraph, one "Key: value" per line.

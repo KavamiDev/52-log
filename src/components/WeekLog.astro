@@ -1,0 +1,36 @@
+---
+import DueRow from "./DueRow.astro";
+import type { Product } from "../lib/types";
+import { productStatus } from "../lib/stats";
+import { currentWeek } from "../lib/week";
+import { pad, fmtDate, href, statusLabel } from "../lib/view";
+import CommitRow from "./CommitRow.astro";
+
+interface Props { products: Product[]; now: number }
+const { products, now } = Astro.props;
+const cur = currentWeek(now);
+const weeks = products.filter((p) => p.milestones.length).sort((a, b) => b.week - a.week);
+---
+<section id="log" aria-label="Log" style="display: flex; flex-direction: column; gap: 28px; scroll-margin-top: 16px">
+  {weeks.length === 0 && (
+    <div class="box" style="padding: 24px 16px; font-size: 14px; color: #9198a1">No milestone yet. The first <code>init</code> commit will show up here.</div>
+  )}
+  {weeks.map((p) => {
+    const status = statusLabel[productStatus(p, now)];
+    const due = p.week === cur && !p.milestones.some((m) => m.type === "ship");
+    return (
+      <div style="display: flex; flex-direction: column; gap: 12px">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#9198a1" stroke-width="1.4"><circle cx="8" cy="8" r="2.5"></circle><path d="M1 8h4.5M10.5 8H15"></path></svg>
+          <h2 style="margin: 0; font-size: 14px; font-weight: 600"><a href={href(`w/${pad(p.week)}/`)} style="color: #e6edf3">Week {pad(p.week)} · {p.name}</a></h2>
+          <span style="font-size: 14px; color: #9198a1">Commits on {fmtDate(p.milestones[0].committedAt, { month: "short", day: "numeric", year: "numeric" })}</span>
+          <span class={`lbl ${status.cls}`}>{status.text}</span>
+        </div>
+        <div class="box">
+          {p.milestones.map((m) => <CommitRow m={m} now={now} />)}
+          {due && <DueRow week={p.week} />}
+        </div>
+      </div>
+    );
+  })}
+</section>

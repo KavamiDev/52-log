@@ -1,0 +1,18 @@
+---
+import { site } from "../site.config";
+import { href } from "../lib/view";
+const gh = `https://github.com/${site.github}`;
+---
+<header style="background: #010409; border-bottom: 1px solid #30363d">
+  <div class="wrap" style="padding-top: 12px; padding-bottom: 12px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+    <div style="display: flex; align-items: center; gap: 12px; font-size: 16px">
+      <svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e6edf3" stroke-width="1.5" stroke-linejoin="round"><path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z"></path></svg>
+      <span><a href={gh} style="color: #e6edf3">{site.github}</a> <span style="color: #9198a1">/</span> <a href={href()} style="color: #e6edf3; font-weight: 600">{site.repo}</a></span>
+      <span class="lbl" style="color: #9198a1; border-color: #3d444d">Public</span>
+    </div>
+    <div style="display: flex; gap: 8px">
+      <a class="btn" href={`${gh}/${site.repo}/subscription`}><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z"></path><circle cx="8" cy="8" r="2"></circle></svg>Watch</a>
+      <a class="btn" href={`${gh}/${site.repo}`}><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M8 1.5l1.9 4 4.3.5-3.2 3 .9 4.3L8 11.1 4.1 13.3 5 9 1.8 6l4.3-.5z"></path></svg>Star</a>
+    </div>
+  </div>
+</header>

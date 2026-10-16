@@ -1,0 +1,39 @@
+---
+import type { Product } from "../lib/types";
+import { productStatus, productFields } from "../lib/stats";
+import { pad, href, statusLabel } from "../lib/view";
+
+interface Props { products: Product[]; now: number }
+const { products, now } = Astro.props;
+const list = [...products].sort((a, b) => b.week - a.week);
+---
+<section id="products" aria-labelledby="products-title" class="wrap" style="padding-bottom: 64px; scroll-margin-top: 16px">
+  <h2 id="products-title" class="h-section" style="margin-bottom: 14px">Products</h2>
+  {list.length === 0
+    ? <p class="box" style="margin: 0; padding: 24px 16px; font-size: 14px; color: #9198a1">The first product ships on Sunday.</p>
+    : <ul style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px">
+        {list.map((p) => {
+          const s = statusLabel[productStatus(p, now)];
+          const f = productFields(p);
+          return (
+            <li class="box" style="padding: 16px; display: flex; flex-direction: column; gap: 10px">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+                <span style="font: 12px var(--font-mono); color: #9198a1">W{pad(p.week)}</span>
+                <span class={`lbl ${s.cls}`}>{s.text}</span>
+              </div>
+              <h3 style="margin: 0; font-size: 16px; font-weight: 600">
+                {p.homepage
+                  ? <a href={p.homepage}>{p.name}<span aria-hidden="true"> ↗</span></a>
+                  : <span>{p.name}</span>}
+              </h3>
+              {p.description && <p style="margin: 0; font-size: 14px; line-height: 1.5; color: #9198a1">{p.description}</p>}
+              <div style="margin-top: auto; display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; color: #9198a1">
+                {f.price && <span>€{f.price.amount}</span>}
+                {f.verdict?.paying !== undefined && <span>{f.verdict.paying} paying</span>}
+                <a href={href(`w/${pad(p.week)}/`)}>Week log</a>
+              </div>
+            </li>
+          );
+        })}
+      </ul>}
+</section>

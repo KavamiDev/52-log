@@ -1,0 +1,25 @@
+# Tells KavamiDev/52-log to rebuild when this push contains a milestone commit.
+name: notify-52log
+
+on:
+  push:
+
+jobs:
+  notify:
+    if: github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Look for a convention commit
+        id: scan
+        env:
+          COMMITS: ${{ toJSON(github.event.commits) }}
+        run: |
+          if echo "$COMMITS" | jq -r '.[].message | split("\n")[0]' \
+            | grep -Eq '^(init|progress|cut|ship|verdict)(\(#[0-9]{2}\))?:[[:space:]]+.{1,72}$'; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Ping 52.log
+        if: steps.scan.outputs.found == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.LOG_DISPATCH_TOKEN }}
+        run: gh api repos/KavamiDev/52-log/dispatches -f event_type=milestone

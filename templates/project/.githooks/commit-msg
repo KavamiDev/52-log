@@ -1,0 +1,30 @@
+#!/bin/sh
+# 52.log milestone guard. Normal commits pass untouched.
+# A subject that starts like a milestone (init|progress|cut|ship|verdict followed by "(" or ":")
+# must follow: <type>(#NN): <subject, max 72 chars>. Same rules as src/lib/milestone.ts.
+
+subject=$(grep -v '^#' "$1" | head -n 1 | tr -d '\r' | sed 's/[[:space:]]*$//')
+
+echo "$subject" | grep -Eq '^(init|progress|cut|ship|verdict)[(:]' || exit 0
+
+fail() {
+  echo "52.log: $1" >&2
+  echo "  got:      $subject" >&2
+  echo "  expected: <type>(#NN): <subject, max 72 chars>   e.g. ship(#03): Invoice Buddy is live" >&2
+  exit 1
+}
+
+if echo "$subject" | grep -Eq '^[a-z]+\('; then
+  echo "$subject" | grep -Eq '^[a-z]+\(#[0-9][0-9]\)' || fail "week must be (#00) to (#51)"
+  week=$(echo "$subject" | sed -E 's/^[a-z]+\(#([0-9][0-9])\).*/\1/')
+  [ "$week" -le 51 ] || fail "week must be (#00) to (#51)"
+fi
+
+if ! echo "$subject" | LC_ALL=en_US.UTF-8 grep -Eq '^(init|progress|cut|ship|verdict)(\(#[0-9]{2}\))?:[[:space:]]+.{1,72}$'; then
+  text=$(echo "$subject" | sed -nE 's/^[^:]*:[[:space:]]+(.*)$/\1/p')
+  [ "$(printf %s "$text" | LC_ALL=en_US.UTF-8 wc -m)" -gt 72 ] && fail "subject is max 72 chars"
+  fail "format is type(#NN): subject"
+fi
+
+echo "$subject" | grep -Eq '^init:' && fail "init needs a week: init(#NN): subject"
+exit 0

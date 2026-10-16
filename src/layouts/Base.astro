@@ -1,0 +1,44 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props { title?: string; description?: string; fixture?: boolean }
+const {
+  title = "52.log · Kevin Turpin",
+  description = "52 paid products in 52 weeks, built in public. Every entry is a real commit.",
+  fixture = false,
+} = Astro.props;
+const og = new URL(`${import.meta.env.BASE_URL.replace(/\/$/, "")}/og.png`, Astro.site).href;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0d1117" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={og} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href={`${import.meta.env.BASE_URL.replace(/\/$/, "")}/favicon.svg`} type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700&family=Hubot+Sans:wght@700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body id="top" style="min-height: 100vh">
+    {fixture && <div role="status" style="background: #e3b341; color: #0d1117; font-size: 12px; font-weight: 600; text-align: center; padding: 4px">DEV FIXTURE · not real data</div>}
+    <Header />
+    <slot />
+    <Footer />
+    <script>
+      import { formatCommitDate } from "../lib/stats";
+      const now = Date.now();
+      for (const el of document.querySelectorAll<HTMLTimeElement>("time[data-rel]"))
+        el.textContent = formatCommitDate(Date.parse(el.dateTime), now);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+---
+import DueRow from "../../components/DueRow.astro";
+import Base from "../../layouts/Base.astro";
+import CommitRow from "../../components/CommitRow.astro";
+import data from "../../data/log.json";
+import type { LogData } from "../../lib/build-log";
+import type { Product } from "../../lib/types";
+import { productStatus, productFields } from "../../lib/stats";
+import { currentWeek } from "../../lib/week";
+import { pad, href, statusLabel } from "../../lib/view";
+
+export function getStaticPaths() {
+  return (data as LogData).products.map((p) => ({ params: { week: pad(p.week) }, props: { p } }));
+}
+
+const { p } = Astro.props as { p: Product };
+const now = Date.now();
+const status = statusLabel[productStatus(p, now)];
+const f = productFields(p);
+const due = p.week === currentWeek(now) && !p.milestones.some((m) => m.type === "ship");
+const facts = [
+  f.price && ["Price", `€${f.price.amount}`],
+  f.hours !== undefined && ["Hours spent", String(f.hours)],
+  f.verdict?.visitors !== undefined && ["Visitors", String(f.verdict.visitors)],
+  f.verdict?.signups !== undefined && ["Signups", String(f.verdict.signups)],
+  f.verdict?.paying !== undefined && ["Paying", String(f.verdict.paying)],
+  f.verdict?.revenue !== undefined && ["Revenue", `€${f.verdict.revenue}`],
+].filter(Boolean) as [string, string][];
+const links = [
+  p.homepage && ["Live site", p.homepage],
+  f.demoUrl && f.demoUrl !== p.homepage && ["Demo", f.demoUrl],
+  f.videoUrl && ["Video", f.videoUrl],
+  p.isPublic && ["Repository", `https://github.com/${p.repo}`],
+].filter(Boolean) as [string, string][];
+---
+<Base title={`Week ${pad(p.week)} · ${p.name} · 52.log`} description={p.description ?? `Week ${pad(p.week)} of the 52.log challenge.`} fixture={(data as LogData).fixture}>
+  <main class="wrap" style="padding-top: 32px; padding-bottom: 64px; display: flex; flex-direction: column; gap: 24px; max-width: 960px">
+    <a href={href()} style="font-size: 14px">← All weeks</a>
+    <div style="display: flex; flex-direction: column; gap: 10px">
+      <span style="font: 13px var(--font-mono); color: #9198a1">week {pad(p.week)} / 52</span>
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px">
+        <h1 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: clamp(28px, 5vw, 44px); line-height: 1.1">{p.name}</h1>
+        <span class={`lbl ${status.cls}`}>{status.text}</span>
+      </div>
+      {p.description && <p style="margin: 0; font-size: 16px; line-height: 1.5; color: #9198a1">{p.description}</p>}
+    </div>
+
+    {links.length > 0 && (
+      <div style="display: flex; flex-wrap: wrap; gap: 8px">
+        {links.map(([label, url], i) => <a class={i === 0 ? "btn btn-primary" : "btn"} href={url}>{label}</a>)}
+      </div>
+    )}
+
+    {facts.length > 0 && (
+      <dl class="box" style="margin: 0; padding: 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px">
+        {facts.map(([k, v]) => <div><dt style="font-size: 12px; color: #9198a1">{k}</dt><dd style="margin: 4px 0 0; font-size: 20px; font-weight: 600">{v}</dd></div>)}
+      </dl>
+    )}
+    {f.verdict?.lesson && <p class="box" style="margin: 0; padding: 16px; font-size: 14px; line-height: 1.6"><b>Lesson.</b> {f.verdict.lesson}</p>}
+
+    <section aria-label="Milestones" style="display: flex; flex-direction: column; gap: 12px">
+      <h2 class="h-section">Milestones</h2>
+      <div class="box">
+        {p.milestones.map((m) => <CommitRow m={m} now={now} />)}
+        {due && <DueRow week={p.week} />}
+      </div>
+      {!p.isPublic && <p style="margin: 0; font-size: 12px; color: #9198a1">Private repository: commit links and bodies are hidden.</p>}
+    </section>
+  </main>
+</Base>

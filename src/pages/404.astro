@@ -1,0 +1,14 @@
+---
+import Base from "../layouts/Base.astro";
+import { href } from "../lib/view";
+---
+<Base title="Not found · 52.log">
+  <main style="position: relative; overflow: hidden; min-height: 70vh; display: grid; place-items: center; background: radial-gradient(55% 45% at 0% 45%, rgba(156,96,232,0.5), rgba(156,96,232,0) 70%), linear-gradient(180deg, #100b33 0%, #241a78 40%, #3743b8 75%, #5670dc 100%)">
+    <div class="wrap" style="text-align: center; display: flex; flex-direction: column; gap: 16px; align-items: center; padding-top: 64px; padding-bottom: 64px">
+      <span style="font: 13px var(--font-mono); color: #c9cff5">error 404 · no commit here</span>
+      <h1 style="margin: 0; font-family: var(--font-display); font-weight: 800; font-size: clamp(38px, 6vw, 68px); line-height: 1.02; color: #fff">Lost in space.</h1>
+      <p style="margin: 0; max-width: 460px; font-size: 18px; line-height: 1.55; color: #d7dbf7">This page was never shipped. Maybe it is still somebody's Monday idea.</p>
+      <a class="btn btn-primary" href={href()} style="min-height: 44px; padding: 0 18px">Back to the log</a>
+    </div>
+  </main>
+</Base>

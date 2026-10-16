@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>52.log · Kevin Turpin</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wght@400;500;600;700&amp;family=Hubot+Sans:wght@700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0d1117}
+a{color:#4493f8;text-decoration:none}a:hover{text-decoration:underline}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-radius:6px;border:1px solid #3d444d;background:#212830;color:#e6edf3;font:500 14px 'Mona Sans',system-ui,sans-serif;cursor:pointer}
+.btn:hover{background:#262c36;text-decoration:none}
+.btn-primary{background:#238636;border-color:rgba(240,246,252,0.1);color:#fff}
+.btn-primary:hover{background:#2ea043}
+.lbl{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:2em;font-size:12px;font-weight:500;border:1px solid;white-space:nowrap}
+.l-init{background:rgba(56,139,253,0.15);color:#79c0ff;border-color:rgba(56,139,253,0.4)}
+.l-progress{background:rgba(110,118,129,0.2);color:#c3c9d2;border-color:rgba(110,118,129,0.45)}
+.l-cut{background:rgba(248,81,73,0.15);color:#ff9492;border-color:rgba(248,81,73,0.4)}
+.l-ship{background:rgba(46,160,67,0.15);color:#56d364;border-color:rgba(46,160,67,0.4)}
+.l-verdict{background:rgba(163,113,247,0.15);color:#d2a8ff;border-color:rgba(163,113,247,0.45)}
+.l-wait{background:transparent;color:#e3b341;border-color:rgba(210,153,34,0.5)}
+.commit{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:12px 16px;padding:14px 16px;border-top:1px solid #30363d}
+.commit:first-child{border-top:0}
+.ctitle{margin:0;font-size:14px;font-weight:600;color:#e6edf3;line-height:1.5}
+.cmeta{margin:6px 0 0;display:flex;align-items:center;gap:6px;font-size:12px;color:#9198a1}
+.av{width:20px;height:20px;border-radius:50%;background:#3d2f8f;color:#e6e0ff;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
+.cbody{margin:10px 0 0;font:12px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;color:#9198a1;white-space:pre-wrap}
+.sha{font:12px ui-monospace,SFMono-Regular,Menlo,monospace;color:#9198a1;border:1px solid #3d444d;background:#212830;border-radius:6px;padding:4px 8px}
+.ph{color:#e3b341}
+.tab{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 10px;color:#9198a1;font-size:14px;border-bottom:2px solid transparent}
+.tab:hover{color:#e6edf3;text-decoration:none}
+.cnt{display:inline-block;min-width:18px;padding:0 6px;border-radius:2em;background:#2f353d;color:#e6edf3;font-size:12px;line-height:18px;text-align:center}
+.topic{display:inline-block;padding:0 10px;line-height:24px;border-radius:2em;background:rgba(56,139,253,0.1);color:#4493f8;font-size:12px;font-weight:500}
+</style>
+</helmet>
+<div style="background: #0d1117; color: #e6edf3; font-family: 'Mona Sans', system-ui, sans-serif; min-height: 100vh">
+
+<header style="background: #010409; border-bottom: 1px solid #30363d">
+<div style="max-width: 1280px; margin: 0 auto; padding: 12px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<div style="display: flex; align-items: center; gap: 12px; font-size: 16px">
+<svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#e6edf3" stroke-width="1.5" stroke-linejoin="round"><path d="M12 2 L14 10 L22 12 L14 14 L12 22 L10 14 L2 12 L10 10 Z"></path></svg>
+<span><a href="#" style="color: #e6edf3">kevin-turpin</a> <span style="color: #9198a1">/</span> <a href="#" style="color: #e6edf3; font-weight: 600">52-log</a></span>
+<span class="lbl" style="color: #9198a1; border-color: #3d444d">Public</span>
+</div>
+<div style="display: flex; gap: 8px">
+<a class="btn" href="#"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1 8s2.5-5 7-5 7 5 7 5-2.5 5-7 5-7-5-7-5z"></path><circle cx="8" cy="8" r="2"></circle></svg>Watch</a>
+<a class="btn" href="#"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M8 1.5l1.9 4 4.3.5-3.2 3 .9 4.3L8 11.1 4.1 13.3 5 9 1.8 6l4.3-.5z"></path></svg>Star</a>
+</div>
+</div>
+</header>
+
+<section aria-label="Intro" style="position: relative; overflow: hidden; min-height: 620px; background: radial-gradient(55% 45% at 0% 45%, rgba(156,96,232,0.5), rgba(156,96,232,0) 70%), linear-gradient(180deg, #100b33 0%, #241a78 40%, #3743b8 75%, #5670dc 100%)">
+<sc-for list="{{stars}}" as="s" hint-placeholder-count="80">
+<div aria-hidden="true" style="{{s.style}}"></div>
+</sc-for>
+<div aria-hidden="true" style="position: absolute; top: 70px; right: 24%; width: 34px; height: 34px; border-radius: 50%; box-shadow: 9px -6px 0 0 #f6eec6; filter: drop-shadow(0 0 10px rgba(246,238,198,0.5))"></div>
+<div aria-hidden="true" style="position: absolute; top: 118px; left: 54%; width: 130px; height: 2px; background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.9)); transform: rotate(-16deg); border-radius: 2px"></div>
+
+<div style="position: relative; z-index: 2; max-width: 1280px; margin: 0 auto; padding: 104px 24px 0; display: flex; flex-direction: column; gap: 22px">
+<span style="font: 13px ui-monospace, SFMono-Regular, Menlo, monospace; color: #c9cff5">week 00 / 52 · started Oct 15, 2026</span>
+<h1 style="margin: 0; max-width: 720px; font-family: 'Hubot Sans', 'Mona Sans', sans-serif; font-weight: 800; font-size: clamp(38px, 6vw, 68px); line-height: 1.02; letter-spacing: -0.02em; color: #ffffff">Shipping one product<br>every week.</h1>
+<p style="margin: 0; max-width: 520px; font-size: 18px; line-height: 1.55; color: #d7dbf7">52 weeks, 52 launches, every one of them paid. Idea on Monday, demo on Sunday, numbers thirty days later. The git history is the proof.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; padding-top: 6px">
+<a class="btn btn-primary" href="#log" style="min-height: 44px; padding: 0 18px">Read the log</a>
+<a class="btn" href="#" style="min-height: 44px; padding: 0 18px; background: rgba(13,17,23,0.55); border-color: rgba(201,207,245,0.35)">Follow on GitHub</a>
+</div>
+</div>
+
+<svg aria-hidden="true" viewBox="0 200 1440 320" preserveAspectRatio="xMidYMax slice" style="position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 320px; z-index: 1">
+<path d="M0 400 L120 365 L220 335 L300 305 L360 258 L405 222 L432 206 L452 214 L470 200 L492 212 L520 196 L548 214 L590 246 L665 292 L760 318 L900 300 L1000 272 L1060 258 L1100 264 L1180 300 L1300 330 L1440 338 L1440 520 L0 520 Z" fill="#3a49bd"></path>
+<path d="M0 432 C 200 384, 380 372, 560 410 C 720 444, 860 396, 1040 382 C 1200 370, 1340 402, 1440 410 L1440 520 L0 520 Z" fill="#26308f"></path>
+<path d="M0 455 C 180 430, 360 440, 520 462 C 700 486, 900 440, 1100 436 C 1260 434, 1360 446, 1440 452 L1440 520 L0 520 Z" fill="#161c5c"></path>
+<g transform="translate(150 470) scale(0.95)" fill="#0a0e2a">
+<path d="M0 0 C 4 -50, 10 -100, 22 -150" stroke="#0a0e2a" stroke-width="6" fill="none" stroke-linecap="round"></path>
+<path d="M22 -150 C 0 -170, -30 -165, -50 -145 C -28 -158, 0 -158, 22 -150 Z"></path>
+<path d="M22 -150 C 10 -180, -10 -190, -30 -190 C -8 -180, 8 -168, 22 -150 Z"></path>
+<path d="M22 -150 C 30 -185, 50 -195, 70 -188 C 50 -182, 34 -170, 22 -150 Z"></path>
+<path d="M22 -150 C 50 -165, 80 -160, 95 -140 C 75 -152, 50 -154, 22 -150 Z"></path>
+<path d="M22 -150 C 40 -150, 60 -135, 66 -110 C 55 -132, 40 -142, 22 -150 Z"></path>
+<path d="M22 -150 C 5 -148, -15 -130, -20 -108 C -10 -130, 5 -142, 22 -150 Z"></path>
+</g>
+<g transform="translate(230 478) scale(0.7)" fill="#0a0e2a">
+<path d="M0 0 C 4 -50, 10 -100, 22 -150" stroke="#0a0e2a" stroke-width="7" fill="none" stroke-linecap="round"></path>
+<path d="M22 -150 C 0 -170, -30 -165, -50 -145 C -28 -158, 0 -158, 22 -150 Z"></path>
+<path d="M22 -150 C 10 -180, -10 -190, -30 -190 C -8 -180, 8 -168, 22 -150 Z"></path>
+<path d="M22 -150 C 30 -185, 50 -195, 70 -188 C 50 -182, 34 -170, 22 -150 Z"></path>
+<path d="M22 -150 C 50 -165, 80 -160, 95 -140 C 75 -152, 50 -154, 22 -150 Z"></path>
+<path d="M22 -150 C 40 -150, 60 -135, 66 -110 C 55 -132, 40 -142, 22 -150 Z"></path>
+</g>
+<g transform="translate(1330 474) scale(0.8)" fill="#0a0e2a">
+<path d="M0 0 C -4 -50, -12 -100, -26 -150" stroke="#0a0e2a" stroke-width="6" fill="none" stroke-linecap="round"></path>
+<path d="M-26 -150 C -4 -170, 26 -165, 46 -145 C 24 -158, -4 -158, -26 -150 Z"></path>
+<path d="M-26 -150 C -14 -180, 6 -190, 26 -190 C 4 -180, -12 -168, -26 -150 Z"></path>
+<path d="M-26 -150 C -34 -185, -54 -195, -74 -188 C -54 -182, -38 -170, -26 -150 Z"></path>
+<path d="M-26 -150 C -54 -165, -84 -160, -99 -140 C -79 -152, -54 -154, -26 -150 Z"></path>
+<path d="M-26 -150 C -44 -150, -64 -135, -70 -110 C -59 -132, -44 -142, -26 -150 Z"></path>
+</g>
+<g stroke="#0a0e2a" stroke-linecap="round">
+<line x1="1180" y1="432" x2="1160" y2="486" stroke-width="3"></line>
+<line x1="1180" y1="432" x2="1202" y2="486" stroke-width="3"></line>
+<line x1="1180" y1="432" x2="1183" y2="488" stroke-width="3"></line>
+<line x1="1214" y1="446" x2="1128" y2="400" stroke-width="12"></line>
+<line x1="1136" y1="404" x2="1120" y2="396" stroke-width="16"></line>
+<line x1="1150" y1="412" x2="1146" y2="410" stroke="#f78166" stroke-width="13"></line>
+</g>
+<path d="M0 476 C 240 452, 520 462, 760 484 C 980 504, 1200 456, 1440 466 L1440 520 L0 520 Z" fill="#0d1117"></path>
+<g stroke="#0d1117" stroke-width="2" stroke-linecap="round" fill="none">
+<path d="M60 470 C 62 452, 66 444, 72 436"></path><path d="M66 472 C 66 456, 62 446, 56 440"></path><path d="M70 470 C 74 458, 80 452, 88 448"></path>
+<path d="M1010 482 C 1012 466, 1016 458, 1022 452"></path><path d="M1016 484 C 1014 470, 1010 462, 1004 456"></path><path d="M1020 482 C 1026 470, 1032 464, 1040 460"></path>
+<path d="M1386 466 C 1388 450, 1392 442, 1398 436"></path><path d="M1392 468 C 1390 454, 1386 446, 1380 440"></path>
+</g>
+</svg>
+</section>
+
+<nav aria-label="Sections" style="border-bottom: 1px solid #30363d">
+<div style="max-width: 1280px; margin: 0 auto; padding: 0 24px; display: flex; flex-wrap: wrap; gap: 4px">
+<a class="tab" href="#" style="color: #e6edf3; font-weight: 600; border-bottom-color: #f78166"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 2.5h4.5a1.5 1.5 0 011.5 1.5v9.5a1 1 0 00-1-1H2z"></path><path d="M14 2.5H9.5A1.5 1.5 0 008 4v9.5a1 1 0 011-1h5z"></path></svg>Overview</a>
+<a class="tab" href="#log"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="2.5"></circle><path d="M1 8h4.5M10.5 8H15"></path></svg>Log <span class="cnt">1</span></a>
+<a class="tab" href="#"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M8 1.5l6 3v7l-6 3-6-3v-7z"></path><path d="M2 4.5l6 3 6-3M8 7.5v7"></path></svg>Products <span class="cnt">0</span></a>
+<a class="tab" href="#"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1.5 14.5h13M3.5 11v3.5M7 7v7.5M10.5 9v5.5M14 4v10.5"></path></svg>Revenue</a>
+</div>
+</nav>
+
+<main style="max-width: 1280px; margin: 0 auto; padding: 32px 24px 64px; display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start">
+
+<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 32px">
+
+<section aria-label="52-week activity" style="border: 1px solid #30363d; border-radius: 6px; padding: 16px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; margin-bottom: 14px">
+<h2 style="margin: 0; font-size: 16px; font-weight: 500">1 milestone commit in week 00</h2>
+<span style="font-size: 12px; color: #9198a1">Oct 2026 to Oct 2027</span>
+</div>
+<div style="overflow-x: auto; padding-bottom: 4px">
+<div style="display: flex; flex-direction: column; gap: 4px; width: max-content">
+<div style="display: flex; gap: 6px">
+<div style="width: 28px"></div>
+<div style="display: grid; grid-template-columns: repeat(52, 11px); gap: 3px; font-size: 11px; color: #9198a1; height: 14px">
+<sc-for list="{{months}}" as="m" hint-placeholder-count="52"><span style="white-space: nowrap; overflow: visible">{{m}}</span></sc-for>
+</div>
+</div>
+<div style="display: flex; gap: 6px">
+<div style="width: 28px; display: grid; grid-template-rows: repeat(7, 11px); gap: 3px; font-size: 10px; color: #9198a1; line-height: 11px">
+<span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span><span></span>
+</div>
+<div style="display: grid; grid-template-rows: repeat(7, 11px); grid-auto-flow: column; grid-auto-columns: 11px; gap: 3px">
+<sc-for list="{{days}}" as="d" hint-placeholder-count="364"><div title="{{d.label}}" style="{{d.style}}"></div></sc-for>
+</div>
+</div>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; margin-top: 12px; font-size: 12px; color: #9198a1">
+<span>One column per week. One week, one product.</span>
+<span style="display: flex; align-items: center; gap: 3px">Less
+<span style="width: 11px; height: 11px; border-radius: 2px; background: #151b23; outline: 1px solid rgba(240,246,252,0.06); outline-offset: -1px"></span>
+<span style="width: 11px; height: 11px; border-radius: 2px; background: #033a16"></span>
+<span style="width: 11px; height: 11px; border-radius: 2px; background: #196c2e"></span>
+<span style="width: 11px; height: 11px; border-radius: 2px; background: #2ea043"></span>
+<span style="width: 11px; height: 11px; border-radius: 2px; background: #56d364"></span>
+More</span>
+</div>
+</section>
+
+<section id="log" aria-label="Log" style="display: flex; flex-direction: column; gap: 28px">
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px">
+<svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#9198a1" stroke-width="1.4"><circle cx="8" cy="8" r="2.5"></circle><path d="M1 8h4.5M10.5 8H15"></path></svg>
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">Week 00 · 52.log</h2>
+<span style="font-size: 14px; color: #9198a1">Commits on Oct 15, 2026</span>
+<span class="lbl l-wait">in progress</span>
+</div>
+<div style="border: 1px solid #30363d; border-radius: 6px">
+<div class="commit">
+<div style="flex: 1 1 360px; min-width: 0">
+<p class="ctitle">init: 52.log, a portfolio shaped like a commit log</p>
+<p class="cmeta"><span class="av">KT</span><span style="color: #e6edf3; font-weight: 600">kevin-turpin</span> committed on Oct 15</p>
+<pre class="cbody">For: anyone following the challenge (recruiters, friends, me in six months)
+Hypothesis: a public, timestamped log keeps me shipping
+V1 scope: log page, 52-week grid, counters</pre>
+</div>
+<div style="display: flex; align-items: center; gap: 8px"><span class="lbl l-init">init</span><span class="sha">[sha]</span></div>
+</div>
+<div class="commit" style="background: #0a0e14">
+<div style="flex: 1 1 360px; min-width: 0">
+<p class="ctitle" style="color: #9198a1; font-weight: 500">ship: <span class="ph">[link to the live site]</span></p>
+<p class="cmeta">due Sunday Oct 18</p>
+</div>
+<div style="display: flex; align-items: center; gap: 8px"><span class="lbl l-ship">ship</span></div>
+</div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px">
+<svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#9198a1" stroke-width="1.4"><circle cx="8" cy="8" r="2.5"></circle><path d="M1 8h4.5M10.5 8H15"></path></svg>
+<h2 style="margin: 0; font-size: 14px; font-weight: 600">Week 01 · <span class="ph">[PRODUCT NAME]</span></h2>
+<span style="font-size: 14px; color: #9198a1">a full week, as it will read</span>
+</div>
+<div style="border: 1px solid #30363d; border-radius: 6px">
+<div class="commit">
+<div style="flex: 1 1 360px; min-width: 0">
+<p class="ctitle">init: <span class="ph">[one-sentence idea]</span></p>
+<p class="cmeta"><span class="av">KT</span><span style="color: #e6edf3; font-weight: 600">kevin-turpin</span> committed Monday 09:12</p>
+<pre class="cbody">For: <span class="ph">[specific audience]</span>
+Problem: <span class="ph">[real pain]</span>
+Hypothesis: people will pay <span class="ph">[PRICE]</span> for <span class="ph">[OUTCOME]</span>
+V1 scope: <span class="ph">[one feature]</span></pre>
+</div>
+<div style="display: flex; align-items: center; gap: 8px"><span class="lbl l-init">init</span><span class="sha">[sha]</span></div>
+</div>
+<div class="commit">
+<div style="flex: 1 1 360px; min-width: 0">
+<p class="ctitle">progress: <span class="ph">[what works, what is blocking]</span></p>
+<p class="cmeta"><span class="av">KT</span><span style="color: #e6edf3; font-weight: 600">kevin-turpin</span> committed Wednesday 21:40</p>
+</div>
+<div style="display: flex; align-items: center; gap: 8px"><span class="lbl l-progress">progress</span><span class="sha">[sha]</span></div>
+</div>
+<div class="commit">
+<div style="flex: 1 1 360px; min-width: 0">
+<p class="ctitle">cut: scope frozen, out of V1: <span class="ph">[features cut]</span></p>
+<p class="cmeta"><span class="av">KT</span><span style="color: #e6edf3; font-weight: 600">kevin-turpin</span> committed Thursday 22:05</p>
+</div>
+<div style="display: flex; align-items: center; gap: 8px"><span class="lbl l-cut">cut</span><span class="sha">[sha]</span></div>
+</div>
+<div class="commit">
+<div style="flex: 1 1 360px; min-width: 0">
+<p class="ctitle">ship: demo <span class="ph">[link]</span> · price <span class="ph">[PRICE]</span> · <span class="ph">[X]</span> h spent</p>
+<p class="cmeta"><span class="av">KT</span><span style="color: #e6edf3; font-weight: 600">kevin-turpin</span> committed Sunday 18:30</p>
+</div>
+<div style="display: flex; align-items: center; gap: 8px"><span class="lbl l-ship">ship</span><span class="sha">[sha]</span></div>
+</div>
+<div class="commit">
+<div style="flex: 1 1 360px; min-width: 0">
+<p class="ctitle">verdict: <span class="ph">[N]</span> visitors · <span class="ph">[N]</span> paying · <span class="ph">[€N]</span></p>
+<p class="cmeta"><span class="av">KT</span><span style="color: #e6edf3; font-weight: 600">kevin-turpin</span> committed 30 days after ship</p>
+<pre class="cbody">Lesson: <span class="ph">[one sentence]</span></pre>
+</div>
+<div style="display: flex; align-items: center; gap: 8px"><span class="lbl l-verdict">verdict</span><span class="sha">[sha]</span></div>
+</div>
+</div>
+</div>
+
+</section>
+</div>
+
+<aside aria-label="About" style="flex: 1 1 260px; max-width: 100%; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 16px; font-weight: 600">About</h2>
+<p style="margin: 0; font-size: 16px; line-height: 1.5; color: #e6edf3">A public log of 52 products shipped in 52 weeks. Every one is paid, to find out what people actually buy.</p>
+<a href="#" style="display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#9198a1" stroke-width="1.4" stroke-linecap="round"><path d="M6.5 9.5l3-3M7 4.5l1.2-1.2a2.6 2.6 0 013.6 3.6L10.6 8M9 11.5l-1.2 1.2a2.6 2.6 0 01-3.6-3.6L5.4 8"></path></svg><span class="ph">[your-domain]</span></a>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span class="topic">build-in-public</span><span class="topic">mvp</span><span class="topic">indie-hacking</span><span class="topic">convex</span><span class="topic">tanstack-start</span>
+</div>
+<ul style="list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: #9198a1">
+<li style="display: flex; align-items: center; gap: 8px"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="3" width="12" height="11" rx="1.5"></rect><path d="M2 6.5h12M5 1.5v3M11 1.5v3"></path></svg><b style="color: #e6edf3">Week 00</b> of 52</li>
+<li style="display: flex; align-items: center; gap: 8px"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M8 1.5l6 3v7l-6 3-6-3v-7z"></path></svg><b style="color: #e6edf3">0</b> shipped</li>
+<li style="display: flex; align-items: center; gap: 8px"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M9 1.5L3.5 9H8l-1 5.5L12.5 7H8z"></path></svg><b style="color: #e6edf3">0</b> week streak</li>
+<li style="display: flex; align-items: center; gap: 8px"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1.5 14.5h13M3.5 11v3.5M7 7v7.5M10.5 9v5.5M14 4v10.5"></path></svg><b style="color: #e6edf3">€0</b> total revenue</li>
+</ul>
+</div>
+<div style="border-top: 1px solid #30363d"></div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-size: 16px; font-weight: 600">Rules</h2>
+<ol style="margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 8px; font-size: 14px; line-height: 1.5; color: #9198a1">
+<li>Idea committed Monday, demo shipped Sunday.</li>
+<li>Scope freezes Thursday night. Whatever is not done leaves V1.</li>
+<li>Every product has a price.</li>
+<li>Numbers are published 30 days after launch, good or bad.</li>
+<li>Two skipped weeks allowed. Never two in a row.</li>
+</ol>
+</div>
+<div style="border-top: 1px solid #30363d"></div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 16px; font-weight: 600">Revenue by product</h2>
+<div style="height: 8px; border-radius: 4px; background: #151b23; outline: 1px solid #30363d; outline-offset: -1px"></div>
+<span style="font-size: 12px; color: #9198a1">Nothing sold yet. Ask again in November.</span>
+</div>
+</aside>
+
+</main>
+
+<section aria-label="Constellation" style="background: linear-gradient(180deg, #0d1117 0%, #17144a 45%, #1d1a5e 60%, #0d1117 100%); padding: 72px 0">
+<div style="max-width: 1280px; margin: 0 auto; padding: 0 24px; display: flex; flex-wrap: wrap; gap: 32px 48px; align-items: center">
+<div style="flex: 1 1 280px; display: flex; flex-direction: column; gap: 14px">
+<span style="font: 12px ui-monospace, SFMono-Regular, Menlo, monospace; color: #a5b4fc; letter-spacing: 0.08em">THE WHOLE YEAR</span>
+<h2 style="margin: 0; font-family: 'Hubot Sans', 'Mona Sans', sans-serif; font-weight: 800; font-size: 36px; line-height: 1.1">Connect the dots.</h2>
+<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #c9cff5">Every shipped product lights a star. The path is already drawn, it just needs 52 Sundays.</p>
+<span style="font-size: 14px; color: #9198a1"><b style="color: #ffe9a8">1</b> of 52 lit · in progress</span>
+</div>
+<div style="flex: 999 1 560px; min-width: 0">
+<svg role="img" aria-label="52 stars, one per week; week 00 is lit" viewBox="0 0 1040 300" style="width: 100%; height: auto; display: block">
+<polyline points="44,58 115,30 211,34 269,50 363,63 435,48 502,41 596,64 657,27 750,59 815,37 893,31 983,30 979,118 905,113 836,107 741,127 658,123 580,105 520,118 435,116 367,130 287,124 195,107 139,134 43,100 47,183 137,199 193,203 284,184 345,192 446,167 528,193 599,191 688,205 745,198 837,176 911,180 989,192 988,270 906,268 815,270 765,246 670,252 587,249 505,270 450,273 346,241 270,242 194,244 127,244 33,254" fill="none" stroke="#4a4f9c" stroke-width="1" stroke-dasharray="2 5" opacity="0.7"></polyline>
+<circle cx="115" cy="30" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 01</title></circle><circle cx="211" cy="34" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 02</title></circle><circle cx="269" cy="50" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 03</title></circle><circle cx="363" cy="63" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 04</title></circle><circle cx="435" cy="48" r="3" fill="#8b93c7" opacity="0.55"><title>Week 05</title></circle><circle cx="502" cy="41" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 06</title></circle><circle cx="596" cy="64" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 07</title></circle><circle cx="657" cy="27" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 08</title></circle><circle cx="750" cy="59" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 09</title></circle><circle cx="815" cy="37" r="3" fill="#8b93c7" opacity="0.55"><title>Week 10</title></circle><circle cx="893" cy="31" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 11</title></circle><circle cx="983" cy="30" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 12</title></circle><circle cx="979" cy="118" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 13</title></circle><circle cx="905" cy="113" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 14</title></circle><circle cx="836" cy="107" r="3" fill="#8b93c7" opacity="0.55"><title>Week 15</title></circle><circle cx="741" cy="127" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 16</title></circle><circle cx="658" cy="123" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 17</title></circle><circle cx="580" cy="105" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 18</title></circle><circle cx="520" cy="118" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 19</title></circle><circle cx="435" cy="116" r="3" fill="#8b93c7" opacity="0.55"><title>Week 20</title></circle><circle cx="367" cy="130" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 21</title></circle><circle cx="287" cy="124" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 22</title></circle><circle cx="195" cy="107" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 23</title></circle><circle cx="139" cy="134" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 24</title></circle><circle cx="43" cy="100" r="3" fill="#8b93c7" opacity="0.55"><title>Week 25</title></circle><circle cx="47" cy="183" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 26</title></circle><circle cx="137" cy="199" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 27</title></circle><circle cx="193" cy="203" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 28</title></circle><circle cx="284" cy="184" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 29</title></circle><circle cx="345" cy="192" r="3" fill="#8b93c7" opacity="0.55"><title>Week 30</title></circle><circle cx="446" cy="167" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 31</title></circle><circle cx="528" cy="193" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 32</title></circle><circle cx="599" cy="191" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 33</title></circle><circle cx="688" cy="205" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 34</title></circle><circle cx="745" cy="198" r="3" fill="#8b93c7" opacity="0.55"><title>Week 35</title></circle><circle cx="837" cy="176" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 36</title></circle><circle cx="911" cy="180" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 37</title></circle><circle cx="989" cy="192" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 38</title></circle><circle cx="988" cy="270" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 39</title></circle><circle cx="906" cy="268" r="3" fill="#8b93c7" opacity="0.55"><title>Week 40</title></circle><circle cx="815" cy="270" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 41</title></circle><circle cx="765" cy="246" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 42</title></circle><circle cx="670" cy="252" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 43</title></circle><circle cx="587" cy="249" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 44</title></circle><circle cx="505" cy="270" r="3" fill="#8b93c7" opacity="0.55"><title>Week 45</title></circle><circle cx="450" cy="273" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 46</title></circle><circle cx="346" cy="241" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 47</title></circle><circle cx="270" cy="242" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 48</title></circle><circle cx="194" cy="244" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 49</title></circle><circle cx="127" cy="244" r="3" fill="#8b93c7" opacity="0.55"><title>Week 50</title></circle><circle cx="33" cy="254" r="2.2" fill="#8b93c7" opacity="0.55"><title>Week 51</title></circle>
+<circle cx="44" cy="58" r="16" fill="#ffe9a8" opacity="0.14"></circle>
+<circle cx="44" cy="58" r="5" fill="#ffe9a8"><title>Week 00 · in progress</title></circle>
+<text x="58" y="80" fill="#ffe9a8" font-size="12" font-family="ui-monospace, Menlo, monospace">W00</text>
+</svg>
+</div>
+</div>
+</section>
+
+<footer style="border-top: 1px solid #30363d">
+<div style="max-width: 1280px; margin: 0 auto; padding: 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 12px; color: #9198a1">
+<span>© 2026 Kevin Turpin · Built under the Réunion sky</span>
+<span style="display: flex; gap: 16px"><a href="#log">Log</a><a href="#">Products</a><a href="#">RSS</a><a href="#">GitHub</a></span>
+</div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var seed = 11;
+    function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+    var stars = [];
+    for (var i = 0; i < 80; i++) {
+      var size = rnd() < 0.85 ? 1.5 : 2.5;
+      var top = rnd() * 62;
+      var left = rnd() * 100;
+      var op = (0.35 + rnd() * 0.6).toFixed(2);
+      stars.push({ style: 'position: absolute; top: ' + top.toFixed(2) + '%; left: ' + left.toFixed(2) + '%; width: ' + size + 'px; height: ' + size + 'px; border-radius: 50%; background: #ffffff; opacity: ' + op + ';' });
+    }
+    var names = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var start = new Date(2026, 9, 12);
+    var months = [];
+    var prev = -1;
+    for (var w = 0; w < 52; w++) {
+      var d = new Date(start.getTime() + w * 7 * 86400000);
+      var m = d.getMonth();
+      months.push(m !== prev && (w === 0 || d.getDate() <= 7) ? names[m] : '');
+      prev = m;
+    }
+    var days = [];
+    var cell = 'width: 11px; height: 11px; border-radius: 2px; ';
+    for (var k = 0; k < 364; k++) {
+      var day = new Date(start.getTime() + k * 86400000);
+      var lit = k === 3;
+      var label = names[day.getMonth()] + ' ' + day.getDate() + (lit ? ' · init: 52.log' : '');
+      days.push({ label: label, style: cell + (lit ? 'background: #196c2e;' : 'background: #151b23; outline: 1px solid rgba(240,246,252,0.06); outline-offset: -1px;') });
+    }
+    return { stars: stars, months: months, days: days };
+  }
+}
+</script>
+</body>
+</html>
